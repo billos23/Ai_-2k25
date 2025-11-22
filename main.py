@@ -72,7 +72,7 @@ def main():
     print(f"\nUsing heuristic: {heuristic.get_name()}")
     
     # Create solver
-    solver = AStarSolver(heuristic, max_states=50000, timeout_seconds=30.0)
+    solver = AStarSolver(heuristic, max_states=200000, timeout_seconds=60.0)
     
     # Solve
     print("\nSolving...")

@@ -1,137 +1,272 @@
 # A* Sokoban Solver
 
-An implementation of the A* search algorithm for solving Sokoban puzzles.
+Υλοποίηση του αλγορίθμου αναζήτησης A* για την επίλυση παζλ Sokoban.
 
-## What is Sokoban?
+## Τι είναι το Sokoban;
 
-Sokoban is a classic puzzle game where you push boxes to goal locations in a warehouse. The player can only push boxes (not pull them), and only one box at a time. The goal is to get all boxes onto the goal positions.
+Το Sokoban είναι ένα κλασικό παιχνίδι παζλ όπου σπρώχνετε κιβώτια σε θέσεις-στόχους μέσα σε μια αποθήκη. Ο παίκτης μπορεί μόνο να σπρώχνει κιβώτια (όχι να τα τραβάει), και μόνο ένα κιβώτιο τη φορά. Στόχος είναι να τοποθετηθούν όλα τα κιβώτια στις θέσεις-στόχους.
 
-## Features
+## Χαρακτηριστικά
 
-- **A* Search Algorithm**: Optimal pathfinding with admissible heuristics
-- **Two Heuristics**:
-  - Manhattan Distance: Sum of distances from boxes to nearest goals
-  - Simple: Count of boxes not on goals
-- **Level Loader**: Parses standard .sok format files
-- **10 Sokoban Levels**: Aymeric du Peloux's Medium collection
-- **Interactive Interface**: Select levels, choose heuristics, view solutions
+- **Αλγόριθμος A***: Βέλτιστη εύρεση διαδρομής με admissible ευρετικές
+- **Δύο Ευρετικές Συναρτήσεις**:
+  - Manhattan Distance: Άθροισμα αποστάσεων από κιβώτια σε πλησιέστερους στόχους
+  - Simple: Πλήθος κιβωτίων που δεν είναι σε στόχους
+- **Φόρτωση Επιπέδων**: Ανάγνωση αρχείων .sok format
+- **10 Επίπεδα Sokoban**: Συλλογή Medium του Aymeric du Peloux
+- **Διαδραστική Διεπαφή**: Επιλογή επιπέδων, ευρετικών, προβολή λύσεων
 
-## Installation
+## Απαιτήσεις Συστήματος
 
-No external dependencies required - uses only Python standard library.
+### Λογισμικό
+- **Python 3.x** (συνιστάται έκδοση 3.7 ή νεότερη)
+- Καμία εξωτερική βιβλιοθήκη δεν απαιτείται (χρησιμοποιείται μόνο η standard library)
+- Προαιρετικά: `psutil` για παρακολούθηση μνήμης
+
+### Λειτουργικό Σύστημα
+- Windows, Linux, macOS
+- Οποιοδήποτε σύστημα που υποστηρίζει Python 3.x
+
+## Εγκατάσταση
+
+### 1. Εγκατάσταση Python
+
+#### Windows
+1. Κατεβάστε το Python από το [python.org](https://www.python.org/downloads/)
+2. Εκτελέστε το installer
+3. **Σημαντικό**: Επιλέξτε "Add Python to PATH" κατά την εγκατάσταση
+4. Επαληθεύστε την εγκατάσταση:
+   ```cmd
+   python --version
+   ```
+
+#### Linux
+```bash
+# Debian/Ubuntu
+sudo apt update
+sudo apt install python3
+
+# Fedora
+sudo dnf install python3
+
+# Επαλήθευση
+python3 --version
+```
+
+#### macOS
+```bash
+# Χρησιμοποιώντας Homebrew
+brew install python3
+
+# Επαλήθευση
+python3 --version
+```
+
+### 2. Προαιρετική Εγκατάσταση psutil
+
+Για παρακολούθηση χρήσης μνήμης (προαιρετικό):
 
 ```bash
-# Clone or download this repository
-cd AiAskisi1
+pip install psutil
+```
 
-# Run the solver
+## Μεταγλώττιση
+
+**Η Python είναι interpreted γλώσσα - δεν απαιτείται μεταγλώττιση!**
+
+Τα αρχεία `.py` εκτελούνται απευθείας από τον Python interpreter. Η Python δημιουργεί αυτόματα bytecode files (`.pyc`) στους φακέλους `__pycache__/` κατά την πρώτη εκτέλεση για ταχύτερη φόρτωση.
+
+## Εκτέλεση
+
+### Κύρια Εφαρμογή
+
+#### Windows
+```cmd
 python main.py
 ```
 
-## Usage
-
+#### Linux/macOS
 ```bash
-python main.py
+python3 main.py
 ```
 
-Then:
-1. Select a level number (1-10)
-2. Choose a heuristic (1 for Manhattan Distance, 2 for Simple)
-3. Wait for the solver to find a solution
-4. Optionally view the step-by-step solution path
+### Διαδραστικό Μενού
 
-## Sokoban Notation
+Μετά την εκτέλεση, θα εμφανιστεί το ακόλουθο μενού:
 
-- `#` = Wall
-- `@` = Player
-- `$` = Box
-- `.` = Goal
-- `*` = Box on goal
-- `+` = Player on goal
-- ` ` = Empty space
+```
+=== A* Sokoban Solver ===
+1. Load level from file
+2. Run test puzzle
+3. Exit
+```
 
-## Project Structure
+#### Επιλογή 1: Φόρτωση Επιπέδου από Αρχείο
+1. Επιλέξτε `1`
+2. Εισάγετε το path του αρχείου (π.χ. `levels/Aymeric_Medium.sok`)
+3. Επιλέξτε αριθμό επιπέδου (1-10)
+4. Επιλέξτε ευρετική:
+   - `1` για Manhattan Distance (συνιστάται)
+   - `2` για Simple Heuristic
+
+#### Επιλογή 2: Εκτέλεση Δοκιμαστικού Παζλ
+Εκτελεί ένα απλό 2-κινήσεων παζλ για επαλήθευση της λειτουργίας.
+
+### Παράδειγμα Εκτέλεσης
+
+```
+Enter choice: 1
+Enter .sok file path: levels/Aymeric_Medium.sok
+Enter level number (1-10): 1
+Select heuristic:
+1. Manhattan Distance (recommended)
+2. Simple Heuristic
+Enter choice: 1
+
+Solving level 1...
+Initial state:
+#####
+#@$.#
+#####
+
+Solution found!
+Moves: R
+Total moves: 1
+States explored: 3
+Time: 0.001s
+```
+
+## Συμβολισμός Sokoban
+
+- `#` = Τοίχος
+- `@` = Παίκτης
+- `$` = Κιβώτιο
+- `.` = Στόχος
+- `*` = Κιβώτιο σε στόχο
+- `+` = Παίκτης σε στόχο
+- ` ` = Κενός χώρος
+
+## Δομή Project
 
 ```
 AiAskisi1/
-├── main.py                          # Main application entry point
-├── test_sokoban.py                  # Simple test script
+├── main.py                          # Κύριο πρόγραμμα
+├── test_sokoban.py                  # Δοκιμαστικό script
 ├── levels/
-│   └── Aymeric_Medium.sok          # 10 Sokoban levels
+│   └── Aymeric_Medium.sok          # 10 επίπεδα Sokoban
 └── a_star_solver/
     ├── puzzles/
-    │   ├── base_puzzle.py          # Abstract puzzle interface
-    │   ├── sokoban_puzzle.py       # Sokoban state representation
-    │   └── sokoban_loader.py       # Level file parser
+    │   ├── base_puzzle.py          # Αφηρημένη διεπαφή παζλ
+    │   ├── sokoban_puzzle.py       # Αναπαράσταση κατάστασης Sokoban
+    │   └── sokoban_loader.py       # Parser αρχείων επιπέδων
     └── solver/
-        ├── a_star.py               # Core A* algorithm
-        ├── sokoban_heuristics.py   # Sokoban-specific heuristics
-        └── solution_result.py      # Result data structure
+        ├── a_star.py               # Πυρήνας αλγορίθμου A*
+        ├── heuristic_base.py       # Αφηρημένη κλάση ευρετικών
+        ├── sokoban_heuristics.py   # Ευρετικές για Sokoban
+        └── solution_result.py      # Δομή αποτελεσμάτων
 ```
 
-## Testing
+## Δοκιμές
 
-Run the simple test to verify the implementation:
+Εκτελέστε το δοκιμαστικό script για επαλήθευση:
 
-```bash
+#### Windows
+```cmd
 python test_sokoban.py
 ```
 
-This tests a trivial 2-move puzzle to ensure everything works correctly.
+#### Linux/macOS
+```bash
+python3 test_sokoban.py
+```
 
-## Performance Notes
+Αυτό δοκιμάζει ένα τετριμμένο παζλ 2 κινήσεων για να διασφαλίσει ότι όλα λειτουργούν σωστά.
 
-The included levels are medium-difficulty puzzles requiring 69-178 optimal moves. These are challenging for basic A* with simple heuristics:
+## Παράμετροι και Όρια
 
-- **Current limits**: 50,000 states, 30 second timeout
-- **Expected behavior**: May hit state limit before finding solutions
-- **Why**: Sokoban is PSPACE-complete with enormous search spaces
+Το πρόγραμμα έχει προεπιλεγμένα όρια που μπορούν να τροποποιηθούν στον κώδικα:
 
-The implementation is correct and finds optimal solutions for simpler puzzles. To solve the included levels, you would need:
-- More sophisticated heuristics (pattern databases, goal room detection)
-- Better deadlock detection (freeze deadlocks, corral deadlocks)
-- Larger state limits (100,000+)
-- More time (minutes instead of seconds)
+- **Μέγιστες καταστάσεις**: 200,000 (στο `a_star.py`)
+- **Χρονικό όριο**: 60 δευτερόλεπτα (στο `a_star.py`)
+- **Όριο μνήμης**: 512 MB
 
-## Algorithm Details
+Για να αλλάξετε αυτά τα όρια, επεξεργαστείτε το αρχείο `a_star_solver/solver/a_star.py`.
 
-### A* Search
-- Uses priority queue to explore states with lowest f(n) = g(n) + h(n)
-- g(n) = actual cost from start
-- h(n) = heuristic estimate to goal
-- Guarantees optimal solution when heuristic is admissible
+## Σημειώσεις Απόδοσης
 
-### Heuristics
-Both heuristics are admissible (never overestimate):
-- **Manhattan Distance**: More informed, usually faster
-- **Simple**: Less informed, explores more states
+Τα συμπεριλαμβανόμενα επίπεδα είναι μεσαίας δυσκολίας και απαιτούν 69-178 βέλτιστες κινήσεις. Είναι προκλητικά για βασικό A* με απλές ευρετικές:
 
-### Deadlock Detection
-Prevents pushing boxes into unsolvable positions:
-- Corner deadlocks: Box in corner not on goal
-- Conservative approach to avoid false positives
+- **Αναμενόμενη συμπεριφορά**: Μπορεί να φτάσει το όριο καταστάσεων πριν βρει λύση
+- **Γιατί**: Το Sokoban είναι PSPACE-complete με τεράστιους χώρους αναζήτησης
 
-## Levels
+Η υλοποίηση είναι σωστή και βρίσκει βέλτιστες λύσεις για απλούστερα παζλ. Για να λυθούν τα συμπεριλαμβανόμενα επίπεδα, θα χρειαζόταν:
+- Πιο εξελιγμένες ευρετικές (pattern databases, goal room detection)
+- Καλύτερη ανίχνευση deadlocks (freeze deadlocks, corral deadlocks)
+- Μεγαλύτερα όρια καταστάσεων (100,000+)
+- Περισσότερος χρόνος (λεπτά αντί για δευτερόλεπτα)
 
-The 10 included levels from Aymeric du Peloux's collection:
+## Λεπτομέρειες Αλγορίθμου
 
-1. Nabokosmos 15 (97 moves)
-2. Nabokosmos 20 (148 moves)
-3. Nabokosmos 14 (104 moves)
-4. Nabokosmos 30 (113 moves)
-5. Nabokosmos 40 (171 moves)
-6. Nabokosmos 29 (136 moves)
-7. Nabokosmos 35 (178 moves)
-8. Nabokosmos 38 (69 moves)
-9. Nabokosmos 33 (110 moves)
-10. Nabokosmos 31 (113 moves)
+### Αναζήτηση A*
+- Χρησιμοποιεί priority queue για εξερεύνηση καταστάσεων με χαμηλότερο f(n) = g(n) + h(n)
+- g(n) = πραγματικό κόστος από την αρχή
+- h(n) = ευρετική εκτίμηση μέχρι τον στόχο
+- Εγγυάται βέλτιστη λύση όταν η ευρετική είναι admissible
 
-## License
+### Ευρετικές Συναρτήσεις
+Και οι δύο ευρετικές είναι admissible (δεν υπερεκτιμούν ποτέ):
+- **Manhattan Distance**: Πιο ενημερωτική, συνήθως ταχύτερη
+- **Simple**: Λιγότερο ενημερωτική, εξερευνά περισσότερες καταστάσεις
 
-This is an educational project. The Sokoban levels are © Aymeric du Peloux.
+### Ανίχνευση Deadlocks
+Αποτρέπει το σπρώξιμο κιβωτίων σε μη-επιλύσιμες θέσεις:
+- Corner deadlocks: Κιβώτιο σε γωνία που δεν είναι στόχος
+- Συντηρητική προσέγγιση για αποφυγή ψευδών θετικών
 
-## References
+## Επίπεδα
 
-- Sokoban levels: https://github.com/medovina/Sokoban4J
-- A* Algorithm: Hart, P. E.; Nilsson, N. J.; Raphael, B. (1968)
-- Sokoban: Created by Hiroyuki Imabayashi (1981)
+Τα 10 συμπεριλαμβανόμενα επίπεδα από τη συλλογή του Aymeric du Peloux:
+
+1. Nabokosmos 15 (97 κινήσεις)
+2. Nabokosmos 20 (148 κινήσεις)
+3. Nabokosmos 14 (104 κινήσεις)
+4. Nabokosmos 30 (113 κινήσεις)
+5. Nabokosmos 40 (171 κινήσεις)
+6. Nabokosmos 29 (136 κινήσεις)
+7. Nabokosmos 35 (178 κινήσεις)
+8. Nabokosmos 38 (69 κινήσεις)
+9. Nabokosmos 33 (110 κινήσεις)
+10. Nabokosmos 31 (113 κινήσεις)
+
+## Αντιμετώπιση Προβλημάτων
+
+### "Python is not recognized as an internal or external command"
+- Βεβαιωθείτε ότι η Python είναι εγκατεστημένη
+- Προσθέστε την Python στο PATH των μεταβλητών περιβάλλοντος
+
+### "No module named 'a_star_solver'"
+- Βεβαιωθείτε ότι εκτελείτε το `main.py` από τον ριζικό κατάλογο του project
+- Ελέγξτε ότι υπάρχει το αρχείο `a_star_solver/__init__.py`
+
+### "File not found" κατά τη φόρτωση επιπέδου
+- Ελέγξτε το path του αρχείου .sok
+- Χρησιμοποιήστε σχετικό path από τον ριζικό κατάλογο (π.χ. `levels/Aymeric_Medium.sok`)
+
+### Το πρόγραμμα δεν βρίσκει λύση
+- Τα μεσαία επίπεδα είναι δύσκολα - μπορεί να χρειαστεί αύξηση των ορίων
+- Δοκιμάστε το Manhattan Distance heuristic (είναι πιο αποδοτικό)
+- Ορισμένα επίπεδα μπορεί να μην λυθούν με τα βασικά heuristics
+
+## Δομή Εξόδου
+
+Μετά την επιτυχή επίλυση, το πρόγραμμα εμφανίζει:
+
+1. **Αρχική κατάσταση**: Το παζλ πριν την επίλυση
+2. **Λύση**: Ακολουθία κινήσεων (U=Up, D=Down, L=Left, R=Right)
+3. **Στατιστικά**:
+   - Συνολικές κινήσεις
+   - Καταστάσεις που εξερευνήθηκαν
+   - Χρόνος εκτέλεσης
+   - Χρήση μνήμης (αν υπάρχει psutil)
+   - Σύγκριση με βέλτιστη λύση (αν είναι διαθέσιμη)
+

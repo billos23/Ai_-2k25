@@ -28,18 +28,7 @@ class HeuristicFunction(ABC):
         """
         pass
     
-    @abstractmethod
-    def is_admissible(self) -> bool:
-        """
-        Check if this heuristic is admissible.
-        
-        An admissible heuristic never overestimates the actual cost
-        to reach the goal state.
-        
-        Returns:
-            True if the heuristic is admissible, False otherwise
-        """
-        pass
+
     
     @abstractmethod
     def get_name(self) -> str:
@@ -50,3 +39,4 @@ class HeuristicFunction(ABC):
             Human-readable name of the heuristic
         """
         pass
+

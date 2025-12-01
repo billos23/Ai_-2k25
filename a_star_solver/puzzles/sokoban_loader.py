@@ -2,7 +2,7 @@
 Loader for Sokoban level files.
 """
 
-from typing import List, Dict
+from typing import List
 from a_star_solver.puzzles.sokoban_puzzle import SokobanState
 
 
@@ -160,4 +160,5 @@ class SokobanLevelLoader:
         
 
         raise ValueError(f"Level {number} not found")
+
 

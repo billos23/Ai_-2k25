@@ -185,8 +185,46 @@ class SokobanState(PuzzleState):
            (down_wall and left_wall) or (down_wall and right_wall):
             return True
         
-        # Wall deadlocks: box against wall with no goals along that wall
-        # This is more complex and we'll skip it for now to avoid false positives
+        if self._is_wall_deadlock(pos, up_wall, down_wall, left_wall, right_wall):
+            return True
+        
+        return False
+    
+    def _is_wall_deadlock(self, pos: Tuple[int, int], up_wall: bool, down_wall: bool, 
+                          left_wall: bool, right_wall: bool) -> bool:
+        row, col = pos
+        
+        if up_wall or down_wall:
+            has_goal_on_row = any(g[0] == row and g not in self.boxes for g in self.goals)
+            if not has_goal_on_row:
+                return True
+        
+        if left_wall or right_wall:
+            has_goal_on_col = any(g[1] == col and g not in self.boxes for g in self.goals)
+            if not has_goal_on_col:
+                return True
+        
+        return False
+    
+    def _is_freeze_deadlock(self, new_boxes: Set[Tuple[int, int]]) -> bool:
+        for box in new_boxes:
+            if box in self.goals:
+                continue
+            
+            row, col = box
+            
+            vertical_blocked = (
+                ((row - 1, col) in self.walls or (row - 1, col) in new_boxes) and
+                ((row + 1, col) in self.walls or (row + 1, col) in new_boxes)
+            )
+            
+            horizontal_blocked = (
+                ((row, col - 1) in self.walls or (row, col - 1) in new_boxes) and
+                ((row, col + 1) in self.walls or (row, col + 1) in new_boxes)
+            )
+            
+            if vertical_blocked and horizontal_blocked:
+                return True
         
         return False
     
@@ -230,6 +268,9 @@ class SokobanState(PuzzleState):
             # Move the box
             new_boxes.remove(new_player_pos)
             new_boxes.add(box_new_pos)
+            
+            if self._is_freeze_deadlock(new_boxes):
+                raise ValueError(f"Freeze deadlock detected")
         
         return SokobanState(
             self.walls,
@@ -278,4 +319,5 @@ class SokobanState(PuzzleState):
     
     
   
+
 

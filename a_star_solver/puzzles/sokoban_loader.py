@@ -110,10 +110,9 @@ class SokobanLevelLoader:
                     elif meta_line.startswith('Author:'):
                         author = meta_line.replace('Author:', '').strip()
                     elif meta_line.startswith('Moves:'):
-                        try:
+                        
                             moves = int(meta_line.replace('Moves:', '').strip())
-                        except ValueError:
-                            moves = 0
+                        
                     elif meta_line.isdigit() or not meta_line:
                         # Next level or empty line
                         break
@@ -160,5 +159,6 @@ class SokobanLevelLoader:
         
 
         raise ValueError(f"Level {number} not found")
+
 
 

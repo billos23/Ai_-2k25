@@ -10,7 +10,7 @@ class SokobanLevel:
     """Represents a Sokoban level with metadata."""
     
     def __init__(self, number: int, level_string: str, title: str = "", 
-                 author: str = "", moves: int = 0):
+                  moves: int = 0):
         """
         Initialize a Sokoban level.
         
@@ -22,9 +22,9 @@ class SokobanLevel:
             moves: Optimal number of moves
         """
         self.number = number
-        self.level_string = level_string
+     
         self.title = title
-        self.author = author
+        
         self.moves = moves
         self.state = SokobanState.from_string(level_string)
     
@@ -160,3 +160,4 @@ class SokobanLevelLoader:
         
 
         raise ValueError(f"Level {number} not found")
+

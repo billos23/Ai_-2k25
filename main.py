@@ -13,13 +13,29 @@ def main():
     print("="*60)
     print("A* SOKOBAN PUZZLE SOLVER")
     print("="*60)
+
+    print("\nAvailable level files:")
+    print("  1. Aymeric Medium (10 levels)")
+    print("  2. Aymeric Hard (10 levels)")
+
+    #Menu
+     while True:
+        file_choice = input("\nSelect level file (1 or 2): ").strip()
+        if file_choice == '1':
+            level_file = 'levels/Aymeric_Medium.sok'
+            break
+        elif file_choice == '2':
+            level_file = 'levels/Aymeric_Hard.sok'
+            break
+        else:
+            print("Please enter 1 or 2")
     
     # Load levels
     try:
-        levels = SokobanLevelLoader.load_from_file('levels/Aymeric_Medium.sok')
-        print(f"\nLoaded {len(levels)} Sokoban levels")
+        levels = SokobanLevelLoader.load_from_file(level_file)   
+        print(f"\nLoaded {len(levels)} from {level_file}")
     except FileNotFoundError:
-        print("\nError: Could not find levels/Aymeric_Medium.sok")
+        print("\nError: Could not find {level_file}")
         print("Please ensure the level file is in the levels directory.")
         sys.exit(1)
     except Exception as e:
@@ -128,6 +144,7 @@ if __name__ == "__main__":
     
 
         sys.exit(1)
+
 
 
 

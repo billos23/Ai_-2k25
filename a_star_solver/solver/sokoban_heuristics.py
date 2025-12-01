@@ -93,70 +93,51 @@ class SokobanManhattanHeuristic(HeuristicFunction):
     
 
 class SokobanSimpleHeuristic(HeuristicFunction):
-    """
-    Simple heuristic for Sokoban: count boxes not on goals.
-    
-    This is similar to misplaced tiles for sliding puzzles.
-    """
     
     def __init__(self):
-        """Initialize the simple Sokoban heuristic."""
         self._cache = {}
-
     
     def calculate(self, state: PuzzleState) -> int:
-        """
-        Calculate the simple heuristic: boxes not on goals.
-        
-        Args:
-            state: The Sokoban state to evaluate
-            
-        Returns:
-            Number of boxes not on goal positions
-        """
-      
-        
-        # Check cache
         state_hash = state.get_state_hash()
         if state_hash in self._cache:
-            
             return self._cache[state_hash]
         
-      
+        boxes = list(state.boxes)
+        goals = list(state.goals)
         
-        # Count boxes not on goals
-        boxes_on_goals = state.boxes & state.goals
-        boxes_not_on_goals = len(state.boxes) - len(boxes_on_goals)
+        total = 0
+        used_goals = set()
+        remaining_boxes = []
         
-        # Cache the result
-        self._cache[state_hash] = boxes_not_on_goals
+        for box in boxes:
+            if box in goals:
+                continue
+            remaining_boxes.append(box)
         
-        # Limit cache size
+        for box in remaining_boxes:
+            min_dist = float('inf')
+            best_goal = None
+            for goal in goals:
+                if goal not in used_goals:
+                    dist = abs(box[0] - goal[0]) + abs(box[1] - goal[1])
+                    if dist < min_dist:
+                        min_dist = dist
+                        best_goal = goal
+            if best_goal:
+                used_goals.add(best_goal)
+                total += min_dist
+        
+        self._cache[state_hash] = total
         if len(self._cache) > 10000:
             keys_to_remove = list(self._cache.keys())[:1000]
             for key in keys_to_remove:
                 del self._cache[key]
         
-        return boxes_not_on_goals
-    
-    def is_admissible(self) -> bool:
-        """
-        Check if this heuristic is admissible.
-        
-        Returns:
-            True (counting misplaced boxes is admissible)
-        """
-        return True
+        return total
     
     def get_name(self) -> str:
-        """
-        Get the name of this heuristic.
-        
-        Returns:
-            Name of the heuristic
-        """
-        return "Sokoban Simple (Misplaced Boxes)"
-    
-   
+        return "Sokoban Improved Manhattan"
+
+
 
 

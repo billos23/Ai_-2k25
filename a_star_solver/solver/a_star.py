@@ -32,8 +32,7 @@ class AStarSolver:
             TypeError: If heuristic_function is not a HeuristicFunction instance
             ValueError: If heuristic_function is not admissible or limits are invalid
         """
-        if not isinstance(heuristic_function, HeuristicFunction):
-            raise TypeError("heuristic_function must be an instance of HeuristicFunction")
+       
        
         
     
@@ -357,5 +356,6 @@ class AStarSolver:
         """
 
         return self._termination_reason
+
 
 

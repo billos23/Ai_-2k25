@@ -34,15 +34,7 @@ class AStarSolver:
         """
         if not isinstance(heuristic_function, HeuristicFunction):
             raise TypeError("heuristic_function must be an instance of HeuristicFunction")
-        
-        if not heuristic_function.is_admissible():
-            raise ValueError("heuristic_function must be admissible for optimal solutions")
-        
-        if max_states <= 0:
-            raise ValueError("max_states must be positive")
-        
-        if timeout_seconds <= 0:
-            raise ValueError("timeout_seconds must be positive")
+       
         
     
         
@@ -365,4 +357,5 @@ class AStarSolver:
         """
 
         return self._termination_reason
+
 

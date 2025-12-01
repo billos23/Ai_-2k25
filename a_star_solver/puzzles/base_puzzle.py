@@ -67,17 +67,7 @@ class PuzzleState(ABC):
         """
         pass
     
-    @abstractmethod
-    def equals(self, other: 'PuzzleState') -> bool:
-        """
-        Check if this state equals another state.
-        
-        Args:
-            other: Another PuzzleState to compare with
-            
-        Returns:
-            True if states are equal, False otherwise
-        """
-        pass
+
     
     
+

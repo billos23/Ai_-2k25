@@ -47,20 +47,4 @@ class SolutionResult:
             if self.solution_length != 0:
                 raise ValueError("solution_length must be 0 when no solution is found")
     
-    def get_summary(self) -> str:
-        """
-        Get a human-readable summary of the search results.
-        
-        Returns:
-            Formatted string summarizing the search results
-        """
-        if self.solution_found:
-            return (f"Solution found in {self.solution_length} moves\n"
-                   f"States explored: {self.states_explored}\n"
-                   f"States generated: {self.states_generated}\n"
-                   f"Execution time: {self.execution_time:.3f} seconds")
-        else:
-            return (f"No solution found\n"
-                   f"States explored: {self.states_explored}\n"
-                   f"States generated: {self.states_generated}\n"
-                   f"Execution time: {self.execution_time:.3f} seconds")
+ 

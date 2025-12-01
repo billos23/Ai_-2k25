@@ -32,8 +32,7 @@ class SokobanManhattanHeuristic(HeuristicFunction):
         Returns:
             Sum of minimum Manhattan distances from boxes to goals
         """
-        if not isinstance(state, SokobanState):
-            raise TypeError("SokobanManhattanHeuristic only works with SokobanState")
+        
         
         # Check cache
         state_hash = state.get_state_hash()
@@ -122,8 +121,7 @@ class SokobanSimpleHeuristic(HeuristicFunction):
         Returns:
             Number of boxes not on goal positions
         """
-        if not isinstance(state, SokobanState):
-            raise TypeError("SokobanSimpleHeuristic only works with SokobanState")
+      
         
         # Check cache
         state_hash = state.get_state_hash()
@@ -167,3 +165,4 @@ class SokobanSimpleHeuristic(HeuristicFunction):
         return "Sokoban Simple (Misplaced Boxes)"
     
    
+

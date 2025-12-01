@@ -72,7 +72,7 @@ def main():
     print(f"\nUsing heuristic: {heuristic.get_name()}")
     
     # Create solver
-    solver = AStarSolver(heuristic, max_states=200000, timeout_seconds=60.0)
+    solver = AStarSolver(heuristic, max_states=500000, timeout_seconds=60.0)
     
     # Solve
     print("\nSolving...")
@@ -128,4 +128,5 @@ if __name__ == "__main__":
     
 
         sys.exit(1)
+
 

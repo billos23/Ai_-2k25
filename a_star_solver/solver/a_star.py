@@ -44,13 +44,12 @@ class AStarSolver:
         if timeout_seconds <= 0:
             raise ValueError("timeout_seconds must be positive")
         
-        if memory_limit_mb <= 0:
-            raise ValueError("memory_limit_mb must be positive")
+    
         
         self.heuristic_function = heuristic_function
         self.max_states = max_states
         self.timeout_seconds = timeout_seconds
-        self.memory_limit_mb = memory_limit_mb
+        
         
         # Initialize data structures for search
         self._open_list: List[Tuple[int, int, PuzzleState]] = []  # (f_score, counter, state)
@@ -65,8 +64,7 @@ class AStarSolver:
         self._states_generated = 0
         self._counter = 0  # For breaking ties in priority queue
         self._search_start_time = 0.0
-        self._termination_reason = ""
-        self._memory_cleanups = 0
+        self._termination_reason = ""    
         self._last_timeout_check = 0.0
     
     def solve(self, initial_state: PuzzleState) -> SolutionResult:
@@ -274,75 +272,10 @@ class AStarSolver:
                 self._termination_reason = f"Timeout reached ({self.timeout_seconds}s)"
                 return True
         
-        # Check memory usage periodically
-        if self._states_explored % 1000 == 0:
-            if self._check_memory_usage():
-                return True
+       
         
         return False
-    
-    def _check_memory_usage(self) -> bool:
-        """
-        Check memory usage and perform cleanup if needed.
-        
-        Returns:
-            True if search should terminate due to memory issues, False otherwise
-        """
-        try:
-            import psutil
-            import os
-            
-            # Get current process memory usage
-            process = psutil.Process(os.getpid())
-            memory_mb = process.memory_info().rss / 1024 / 1024
-            
-            if memory_mb > self.memory_limit_mb:
-                # Try to free some memory by cleaning up old states
-                self._cleanup_memory()
-                self._memory_cleanups += 1
-                
-                # Check again after cleanup
-                memory_mb = process.memory_info().rss / 1024 / 1024
-                if memory_mb > self.memory_limit_mb * 1.2:  # 20% tolerance
-                    self._termination_reason = f"Memory limit exceeded ({memory_mb:.1f}MB > {self.memory_limit_mb}MB)"
-                    return True
-            
-        except ImportError:
-            # psutil not available, skip memory checking
-            pass
-        except Exception:
-            # Any other error, continue without memory checking
-            pass
-        
-        return False
-    
-    def _cleanup_memory(self) -> None:
-        """
-        Clean up memory by removing old states from tracking dictionaries.
-        """
-        # Keep only the most recent states in closed set
-        if len(self._closed_set) > 50000:
-            # Convert to list and keep only the last 25000
-            closed_list = list(self._closed_set)
-            self._closed_set = set(closed_list[-25000:])
-        
-        # Clean up g_scores and f_scores for states no longer needed
-        states_to_keep = self._open_set | self._closed_set
-        
-        # Clean g_scores
-        g_keys_to_remove = [k for k in self._g_scores.keys() if k not in states_to_keep]
-        for key in g_keys_to_remove:
-            del self._g_scores[key]
-        
-        # Clean f_scores
-        f_keys_to_remove = [k for k in self._f_scores.keys() if k not in states_to_keep]
-        for key in f_keys_to_remove:
-            del self._f_scores[key]
-        
-        # Clean came_from (keep only states that might be in solution path)
-        came_from_keys_to_remove = [k for k in self._came_from.keys() if k not in states_to_keep]
-        for key in came_from_keys_to_remove:
-            del self._came_from[key]
+
     
     def _process_successors(self, current_state: PuzzleState) -> None:
         """
@@ -432,3 +365,4 @@ class AStarSolver:
         """
 
         return self._termination_reason
+

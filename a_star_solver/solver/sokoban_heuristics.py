@@ -20,8 +20,7 @@ class SokobanManhattanHeuristic(HeuristicFunction):
     def __init__(self):
         """Initialize the Sokoban Manhattan heuristic."""
         self._cache = {}
-        self._cache_hits = 0
-        self._cache_misses = 0
+      
     
     def calculate(self, state: PuzzleState) -> int:
         """
@@ -39,10 +38,10 @@ class SokobanManhattanHeuristic(HeuristicFunction):
         # Check cache
         state_hash = state.get_state_hash()
         if state_hash in self._cache:
-            self._cache_hits += 1
+            
             return self._cache[state_hash]
         
-        self._cache_misses += 1
+        
         
         # Calculate minimum matching between boxes and goals
         total_distance = 0
@@ -97,24 +96,9 @@ class SokobanManhattanHeuristic(HeuristicFunction):
         """
         return "Sokoban Manhattan Distance"
     
-    def get_cache_stats(self) -> dict:
-        """Get cache statistics."""
-        total = self._cache_hits + self._cache_misses
-        hit_rate = self._cache_hits / total if total > 0 else 0.0
-        
-        return {
-            'cache_hits': self._cache_hits,
-            'cache_misses': self._cache_misses,
-            'hit_rate': hit_rate,
-            'cache_size': len(self._cache)
-        }
     
-    def clear_cache(self) -> None:
-        """Clear the cache."""
-        self._cache.clear()
-        self._cache_hits = 0
-        self._cache_misses = 0
-
+    
+    
 
 class SokobanSimpleHeuristic(HeuristicFunction):
     """
@@ -126,8 +110,7 @@ class SokobanSimpleHeuristic(HeuristicFunction):
     def __init__(self):
         """Initialize the simple Sokoban heuristic."""
         self._cache = {}
-        self._cache_hits = 0
-        self._cache_misses = 0
+
     
     def calculate(self, state: PuzzleState) -> int:
         """
@@ -145,10 +128,10 @@ class SokobanSimpleHeuristic(HeuristicFunction):
         # Check cache
         state_hash = state.get_state_hash()
         if state_hash in self._cache:
-            self._cache_hits += 1
+            
             return self._cache[state_hash]
         
-        self._cache_misses += 1
+      
         
         # Count boxes not on goals
         boxes_on_goals = state.boxes & state.goals
@@ -183,20 +166,4 @@ class SokobanSimpleHeuristic(HeuristicFunction):
         """
         return "Sokoban Simple (Misplaced Boxes)"
     
-    def get_cache_stats(self) -> dict:
-        """Get cache statistics."""
-        total = self._cache_hits + self._cache_misses
-        hit_rate = self._cache_hits / total if total > 0 else 0.0
-        
-        return {
-            'cache_hits': self._cache_hits,
-            'cache_misses': self._cache_misses,
-            'hit_rate': hit_rate,
-            'cache_size': len(self._cache)
-        }
-    
-    def clear_cache(self) -> None:
-        """Clear the cache."""
-        self._cache.clear()
-        self._cache_hits = 0
-        self._cache_misses = 0
+   

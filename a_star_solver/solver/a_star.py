@@ -1,4 +1,4 @@
-"""
+    """
 A* algorithm implementation for puzzle solving.
 """
 
@@ -356,6 +356,7 @@ class AStarSolver:
         """
 
         return self._termination_reason
+
 
 
 

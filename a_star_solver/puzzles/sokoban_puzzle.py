@@ -293,10 +293,4 @@ class SokobanState(PuzzleState):
                 self.walls == other.walls and
                 self.goals == other.goals)
     
-    def __str__(self) -> str:
-        """String representation of the state."""
-        return self.display()
-    
-    def __repr__(self) -> str:
-        """Detailed representation of the state."""
-        return f"SokobanState(player={self.player}, boxes={len(self.boxes)}, goals={len(self.goals)})"
+  

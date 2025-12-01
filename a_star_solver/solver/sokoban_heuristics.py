@@ -77,14 +77,7 @@ class SokobanManhattanHeuristic(HeuristicFunction):
         
         return total_distance
     
-    def is_admissible(self) -> bool:
-        """
-        Check if this heuristic is admissible.
-        
-        Returns:
-            True (Manhattan distance is admissible for Sokoban)
-        """
-        return True
+    
     
     def get_name(self) -> str:
         """
@@ -165,4 +158,5 @@ class SokobanSimpleHeuristic(HeuristicFunction):
         return "Sokoban Simple (Misplaced Boxes)"
     
    
+
 

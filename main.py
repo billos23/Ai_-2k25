@@ -48,7 +48,7 @@ def main():
             print(f"Error: {e}")
     
     # Display level
-    print(f"\n{level}")
+    print(f"\nLevel {level.number}: {level.title} ({level.moves} optimal moves)")
     print("\nInitial state:")
     print(level.state.display())
     print(f"\nBoxes: {len(level.state.boxes)}, Goals: {len(level.state.goals)}")
@@ -127,4 +127,5 @@ if __name__ == "__main__":
         print(f"\nError: {e}")
         import traceback
         traceback.print_exc()
+
         sys.exit(1)

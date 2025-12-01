@@ -80,12 +80,4 @@ class PuzzleState(ABC):
         """
         pass
     
-    def __eq__(self, other) -> bool:
-        """Override equality operator to use the equals method."""
-        if not isinstance(other, PuzzleState):
-            return False
-        return self.equals(other)
     
-    def __hash__(self) -> int:
-        """Override hash to use state hash."""
-        return hash(self.get_state_hash())

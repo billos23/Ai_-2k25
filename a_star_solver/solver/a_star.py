@@ -413,35 +413,7 @@ class AStarSolver:
         # Reverse to get path from initial to goal
         path.reverse()
         return path
-    
-    def get_search_statistics(self) -> Dict[str, any]:
-        """
-        Get detailed statistics about the current search state.
-        
-        Returns:
-            Dictionary containing search statistics
-        """
-        stats = {
-            'states_explored': self._states_explored,
-            'states_generated': self._states_generated,
-            'open_list_size': len(self._open_list),
-            'closed_set_size': len(self._closed_set),
-            'g_scores_tracked': len(self._g_scores),
-            'f_scores_tracked': len(self._f_scores),
-            'termination_reason': self._termination_reason,
-            'max_states_limit': self.max_states,
-            'timeout_limit': self.timeout_seconds,
-            'memory_limit_mb': self.memory_limit_mb,
-            'memory_cleanups': self._memory_cleanups
-        }
-        
-        # Add heuristic cache stats if available
-        if hasattr(self.heuristic_function, 'get_cache_stats'):
-            heuristic_stats = self.heuristic_function.get_cache_stats()
-            stats['heuristic_cache'] = heuristic_stats
-        
-        return stats
-    
+
     def get_heuristic_name(self) -> str:
         """
         Get the name of the heuristic function being used.
@@ -458,4 +430,5 @@ class AStarSolver:
         Returns:
             String describing why the search ended
         """
+
         return self._termination_reason

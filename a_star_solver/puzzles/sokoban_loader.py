@@ -28,9 +28,6 @@ class SokobanLevel:
         self.moves = moves
         self.state = SokobanState.from_string(level_string)
     
-    def __repr__(self) -> str:
-        """String representation."""
-        return f"Level {self.number}: {self.title} by {self.author} ({self.moves} moves)"
 
 
 class SokobanLevelLoader:
@@ -161,4 +158,5 @@ class SokobanLevelLoader:
             if level.number == number:
                 return level
         
+
         raise ValueError(f"Level {number} not found")

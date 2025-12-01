@@ -275,22 +275,7 @@ class SokobanState(PuzzleState):
         
         return '\n'.join(lines)
     
-    def equals(self, other: 'PuzzleState') -> bool:
-        """
-        Check if this state equals another state.
-        
-        Args:
-            other: Another puzzle state
-            
-        Returns:
-            True if states are equal
-        """
-        if not isinstance(other, SokobanState):
-            return False
-        
-        return (self.player == other.player and 
-                self.boxes == other.boxes and
-                self.walls == other.walls and
-                self.goals == other.goals)
+    
     
   
+
